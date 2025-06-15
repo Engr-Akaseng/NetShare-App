@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Admin Dashboard</h1>
+
+    <nav class="mb-4">
+        <a href="{{ url_for('admin.manage_users') }}" class="btn btn-primary me-2">Manage Users</a>
+        <a href="{{ url_for('admin.manage_pricing') }}" class="btn btn-primary me-2">Manage Pricing</a>
+        <a href="{{ url_for('admin.manage_popups') }}" class="btn btn-primary">Manage Popups</a>
+    </nav>
+
+    <section>
+        <h3>Users Overview</h3>
+        <ul class="list-group mb-4">
+            {% for user in users %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ user.username }} ({{ user.role }}) - {{ user.email }}
+            </li>
+            {% else %}
+            <li class="list-group-item">No users found.</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section>
+        <h3>Pricing Plans</h3>
+        <ul class="list-group mb-4">
+            {% for plan in pricings %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ plan.plan_name }} - ${{ plan.price }} - {{ plan.speed }}
+            </li>
+            {% else %}
+            <li class="list-group-item">No pricing plans found.</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section>
+        <h3>Active Popups</h3>
+        <ul class="list-group mb-4">
+            {% for popup in popups %}
+            <li class="list-group-item">
+                <strong>{{ popup.title }}</strong>: {{ popup.message }}
+            </li>
+            {% else %}
+            <li class="list-group-item">No active popup messages.</li>
+            {% endfor %}
+        </ul>
+    </section>
+</div>
+{% endblock %}

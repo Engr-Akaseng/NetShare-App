@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Pricing Plans - Internet Sharing App{% endblock %}
+
+{% block content %}
+<main class="pricing-container">
+  <section class="intro-section">
+    <h1>Choose Your Internet Plan</h1>
+    <p>Flexible pricing for seamless internet access. Choose the plan that suits your needs and start browsing securely.</p>
+  </section>
+
+  <section class="plans-grid">
+    <!-- BASIC PLAN -->
+    <div class="plan-card">
+      <h2>Basic</h2>
+      <p class="price">100FCA / 1 Hour</p>
+      <ul>
+        <li>Encrypted Internet Access</li>
+        <li>1 Device Connection</li>
+        <li>Limited Bandwidth</li>
+      </ul>
+      <button onclick="location.href='{{ url_for('checkout', plan='basic') }}'">Choose Basic</button>
+    </div>
+
+    <!-- STANDARD PLAN -->
+    <div class="plan-card highlighted">
+      <h2>Standard</h2>
+      <p class="price">200FCFA / 4 Hours</p>
+      <ul>
+        <li>Encrypted Internet Access</li>
+        <li>2 Devices</li>
+        <li>Standard Bandwidth</li>
+        <li>Priority Support</li>
+      </ul>
+      <button onclick="location.href='{{ url_for('checkout', plan='standard') }}'">Choose Standard</button>
+    </div>
+
+    <!-- PREMIUM PLAN -->
+    <div class="plan-card">
+      <h2>Premium</h2>
+      <p class="price">500FCFA / 10 Hours</p>
+      <ul>
+        <li>Encrypted Internet Access</li>
+        <li>Up to 5 Devices</li>
+        <li>High-Speed Bandwidth</li>
+        <li>24/7 Expert Support</li>
+        <li>Daily Usage Reports</li>
+      </ul>
+      <button onclick="location.href='{{ url_for('checkout', plan='premium') }}'">Choose Premium</button>
+    </div>
+  </section>
+
+  <section class="feature-section">
+    <h3>Why Choose Us?</h3>
+    <div class="features">
+      <div class="feature">
+        <h4>Global Sharing</h4>
+        <p>Host and access internet bundles across continents using our secure encrypted configuration files.</p>
+      </div>
+      <div class="feature">
+        <h4>Smart Session Control</h4>
+        <p>Access is automatically timed based on your payment, no need to worry about turning off your connection.</p>
+      </div>
+      <div class="feature">
+        <h4>Encrypted & Secure</h4>
+        <p>All connections are end-to-end encrypted. Stay safe and private while browsing the web.</p>
+      </div>
+      <div class="feature">
+        <h4>Real-Time Dashboard</h4>
+        <p>View your usage, session history, and remaining time from a smart and simple user dashboard.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <h3>Frequently Asked Questions</h3>
+    <details>
+      <summary>Can I upgrade my plan later?</summary>
+      <p>Yes, you can upgrade at any time. Remaining time will be converted to match the new plan.</p>
+    </details>
+    <details>
+      <summary>How do I connect after payment?</summary>
+      <p>You’ll receive a secure configuration file. Open it using our app or supported VPN clients to connect.</p>
+    </details>
+    <details>
+      <summary>Will my unused time roll over?</summary>
+      <p>Unused time is stored in your account. You can use it anytime before it expires (within 7 days).</p>
+    </details>
+  </section>
+</main>
+{% endblock %}

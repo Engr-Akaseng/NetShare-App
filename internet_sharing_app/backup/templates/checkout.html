@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Checkout - {{ selected_plan.title() }} Plan{% endblock %}
+
+{% block content %}
+<div class="checkout-page">
+    <h1>Checkout</h1>
+    <p>You have selected the <strong>{{ selected_plan.title() }}</strong> plan.</p>
+    <p>Please proceed to payment to receive your encrypted internet access file.</p>
+
+    <!-- Payment Form Placeholder -->
+    <form action="/process_payment" method="POST">
+        <input type="hidden" name="plan" value="{{ selected_plan }}">
+        <label for="email">Email Address:</label>
+        <input type="email" name="email" required>
+        <button type="submit">Pay Now</button>
+    </form>
+</div>
+{% endblock %}

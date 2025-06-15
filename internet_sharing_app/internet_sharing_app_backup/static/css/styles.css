@@ -1,0 +1,1074 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Variables */
+:root {
+  --navbar-height: 60px;
+  --footer-height: 60px;
+  --primary-bg: #0a0f28; /* Dark background */
+  --primary-text: #e0e6f8;
+  --secondary-bg: #14213d;
+  --accent-color: #fca311;
+  --accent-hover-color: #e59400;
+  --light-bg: #f9fafb;
+  --white-bg: white;
+  --dark-text: #0a0f28; /* For light backgrounds */
+  --shadow-color: rgba(0,0,0,0.7);
+  --shadow-light: rgba(0,0,0,0.1);
+  --shadow-medium: rgba(0,0,0,0.15);
+  --shadow-strong: rgba(0, 0, 0, 0.6);
+  --shadow-stronger: rgba(0, 0, 0, 0.8);
+  --link-blue: #58a6ff;
+  --success-green: #00b894;
+  --danger-red: #d63031;
+  --warning-yellow: #fdcb6e;
+  --info-blue: #0984e3;
+  --chatbot-primary-bg: #0d1b2a; /* deep black-blue */
+  --chatbot-secondary-bg: #1b263b;
+  --chatbot-accent-bg: #1e90ff;
+  --chatbot-accent-hover: #0d6efd;
+  --chatbot-border-color: #415a77;
+  --page-section-bg: linear-gradient(145deg, #161b22, #1b222b);
+  --page-section-hover-inset: rgba(88, 166, 255, 0.2);
+  --service-card-bg: linear-gradient(135deg, #1c2128, #242b36);
+  --contact-form-input-bg: #0d1117;
+  --button-green-bg: #238636;
+  --button-green-hover-bg: #2ea043;
+}
+
+/* Base styles */
+body, html {
+  height: 100%; /* Ensure html also has height 100% if body is flex column filling viewport */
+  display: flex;
+  flex-direction: column;
+  font-family: 'Roboto', sans-serif;
+  background: var(--primary-bg);
+  color: var(--primary-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased; /* Added from later body definition */
+  -moz-osx-font-smoothing: grayscale; /* Added from later body definition */
+}
+
+/* General Layout & Container */
+.container {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 20px; /* padding-left & padding-right */
+}
+
+main.container {
+  flex: 1; /* Fills available space between header and footer */
+  padding-top: calc(var(--navbar-height) + 20px);
+  padding-bottom: calc(var(--footer-height) + 20px);
+  min-height: calc(100vh - var(--navbar-height) - var(--footer-height) - 40px); /* Ensure content area can fill viewport */
+  display: flex; /* For internal flex children like .content-wrapper */
+  flex-direction: column; /* For internal flex children like .content-wrapper */
+}
+
+/* Navbar */
+.navbar {
+  background: var(--secondary-bg);
+  color: var(--primary-text);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: var(--navbar-height);
+  line-height: var(--navbar-height);
+  box-shadow: 0 2px 5px var(--shadow-color);
+  z-index: 1000;
+  padding: 0 20px; /* Consistent padding */
+}
+
+.navbar .container { /* Re-scoped for clarity, was .navbar .container before */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%; /* Ensure container takes full navbar height */
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  max-height: none; /* Default for desktop */
+  overflow: visible; /* Default for desktop */
+  transition: max-height 0.3s ease; /* Kept for mobile animation */
+}
+
+.nav-links li a {
+  color: var(--primary-text);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: var(--accent-color);
+}
+
+.nav-toggle {
+  display: none;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  color: var(--primary-text);
+  cursor: pointer;
+}
+
+/* Footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0; /* Added for explicitness with fixed positioning */
+  width: 100%;
+  height: var(--footer-height);
+  background: var(--secondary-bg);
+  color: var(--primary-text);
+  padding: 15px 0; /* Vertical padding */
+  text-align: center;
+  font-size: 0.9rem;
+  box-shadow: 0 -2px 5px var(--shadow-color);
+  z-index: 1000;
+  display: flex; /* For centering content */
+  justify-content: center; /* For centering content */
+  align-items: center; /* For centering content */
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 5px; /* Only if there's text below links within the footer */
+}
+
+.footer-links a {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+/* Flash messages */
+.flash-messages {
+  margin-bottom: 20px; /* Should be within a container that has padding */
+}
+
+.alert {
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: var(--white-bg); /* Default color, overridden by warning */
+}
+
+.alert-success { background-color: var(--success-green); }
+.alert-danger  { background-color: var(--danger-red); }
+.alert-warning { background-color: var(--warning-yellow); color: var(--dark-text); } /* Specify dark text for light yellow */
+.alert-info    { background-color: var(--info-blue); }
+
+/* Forms (Auth specific) */
+.auth-form {
+  background: #1e2749; /* Could be a variable if used elsewhere */
+  padding: 20px;
+  border-radius: 6px;
+  max-width: 400px;
+  margin-top: 20px; /* Spacing from elements above */
+}
+
+.auth-form label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.auth-form input[type="text"],
+.auth-form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.auth-form button {
+  width: 100%;
+  padding: 10px;
+  background: var(--accent-color);
+  border: none;
+  border-radius: 4px;
+  color: var(--dark-text);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.auth-form button:hover {
+  background: var(--accent-hover-color);
+}
+
+
+/* Home Page / Content Specific Layout */
+/* .home-container was very similar to .content-wrapper and main.container in purpose.
+   Simplified to use main.container and .content-wrapper.
+   If .home-container has truly unique top/bottom margins, it can be added back.
+   For now, assuming `main.container` provides the primary page structure.
+*/
+
+.content-wrapper {
+  display: flex;
+  gap: 2rem; /* Standardized gap */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens before media query */
+  justify-content: center; /* Center items if they don't fill the space */
+  align-items: flex-start; /* Align items to the top */
+  flex: 1; /* Allow content-wrapper to grow within main.container */
+  /* max-width: 1200px; /* This was duplicated, main.container might be better for global max-width */
+  /* margin: 2rem auto; /* Handled by main.container's padding */
+  /* padding: 0 1rem; /* Handled by main.container's padding */
+  height: 100%; /* To make children with flex:1 work as expected */
+  max-height: 100%; /* To make children with flex:1 work as expected */
+}
+
+.image-grid {
+  flex: 1 1 48%; /* Allow flex grow/shrink, aim for roughly half, adjust as needed */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Took the more flexible minmax */
+  gap: 1rem; /* Standardized gap */
+  max-width: 480px; /* From first definition, can be removed if flex-basis is enough */
+  /* height: 620px; Matched to charts, better to let content define height or use flex properties */
+  overflow-y: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow-light);
+  background-color: var(--white-bg);
+  padding: 1rem; /* Standardized padding */
+  max-height: 100%; /* If inside a flex container with defined height */
+}
+
+.image-grid img {
+  width: 100%;
+  /* height: 100%; /* Use aspect-ratio instead for better responsiveness */
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px var(--shadow-medium);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.image-grid img:hover {
+  transform: scale(1.05);
+}
+
+.charts-container {
+  flex: 1 1 48%; /* Allow flex grow/shrink, aim for roughly half */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Standardized gap */
+  max-width: 480px; /* From first definition */
+  /* height: 620px; /* Removed fixed height, let content or flex define it */
+  background-color: var(--white-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow-light);
+  padding: 1rem; /* Standardized padding */
+  animation: fadeIn 0.6s ease forwards;
+  opacity: 0; /* Initial state for animation */
+  overflow-y: auto; /* If content might exceed, consistent with image-grid */
+  max-height: 100%;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+#internetChart, #lineChart {
+  width: 100%;
+  /* height: 50%; or flex: 1 1 0; */
+  flex: 1 1 0; /* Allows charts to flexibly share space if container height is set by flex */
+  min-height: 0; /* Important for flex children to shrink properly */
+  border-radius: 10px;
+  background: var(--light-bg);
+}
+
+/* Chatbot - Consolidated and refined from multiple versions */
+.chatbot-icon, #chatbot-icon { /* Merged .chatbot-icon and #chatbot-icon */
+  position: fixed;
+  width: 60px; /* Consistent size */
+  height: 60px; /* Consistent size */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1500; /* Higher z-index */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Added box-shadow transition */
+
+  /* Specifics from the more detailed #chatbot-icon */
+  bottom: 25px;
+  right: 25px; /* More common position than top-left */
+  background-color: var(--chatbot-primary-bg); /* Using variables */
+  color: var(--white-bg); /* Text/SVG color */
+  font-size: 24px; /* If using a font icon */
+  padding: 12px; /* If an icon needs padding; image handles its own size */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Consistent shadow */
+}
+
+.chatbot-icon img { /* Style for an image inside the icon */
+  width: 32px;
+  height: 32px;
+  filter: invert(1); /* If original icon is dark and needs to be white */
+}
+
+.chatbot-icon:hover, #chatbot-icon:hover {
+  background-color: var(--chatbot-accent-bg); /* Changed to a more distinct hover */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+
+#chat-popup {
+  display: none; /* Initially hidden */
+  flex-direction: column;
+  position: fixed;
+  bottom: 80px; /* Above the icon */
+  right: 25px; /* Align with icon */
+  width: 320px;
+  max-height: 500px;
+  background-color: var(--chatbot-secondary-bg);
+  color: var(--primary-text); /* Use primary text for readability */
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  z-index: 10000; /* Ensure it's above most other elements */
+  overflow: hidden;
+  font-family: 'Roboto', sans-serif; /* Already on body, but explicit for component */
+}
+
+.chat-header {
+  background-color: var(--chatbot-primary-bg);
+  color: var(--white-bg);
+  padding: 10px 15px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--chatbot-border-color);
+}
+
+.chat-body {
+  padding: 10px;
+  flex-grow: 1; /* Takes available space */
+  overflow-y: auto;
+  max-height: 300px; /* Or adjust based on total max-height of popup */
+  font-size: 14px;
+}
+
+.chat-body p { /* Base for user and bot messages */
+  margin: 8px 0;
+  line-height: 1.4;
+  border-radius: 10px;
+  padding: 10px 12px;
+  max-width: 85%;
+  word-wrap: break-word; /* Ensure long words break */
+}
+
+.chat-body p.user {
+  background-color: var(--chatbot-accent-bg);
+  color: var(--white-bg);
+  align-self: flex-end; /* Requires parent .chat-body to be display:flex; flex-direction:column; */
+  margin-left: auto;
+  text-align: right; /* Already handled by margin-left: auto for block display in flex */
+}
+
+.chat-body p.bot {
+  background-color: #778da9; /* Consider a variable */
+  color: var(--white-bg);
+  align-self: flex-start; /* Requires parent .chat-body to be display:flex; flex-direction:column; */
+  margin-right: auto;
+  text-align: left; /* Already handled by margin-right: auto for block display in flex */
+}
+
+.chat-footer {
+  display: flex;
+  border-top: 1px solid var(--chatbot-border-color);
+  background-color: var(--chatbot-primary-bg);
+  padding: 10px;
+}
+
+.chat-footer input {
+  flex: 1;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-right: 8px;
+  background-color: var(--chatbot-secondary-bg); /* Match popup bg or slightly lighter */
+  color: var(--primary-text);
+}
+
+.chat-footer input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--chatbot-accent-bg); /* Focus indicator */
+}
+
+.chat-footer button {
+  background-color: var(--chatbot-accent-bg);
+  color: var(--white-bg);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.chat-footer button:hover {
+  background-color: var(--chatbot-accent-hover);
+}
+
+
+/* Page Section (Content Blocks like About, Services, Contact etc.) */
+/* Consolidated from two .page-section definitions */
+.page-section {
+  max-width: 900px;
+  margin: 4rem auto; /* More vertical spacing from second definition */
+  padding: 2.5rem 3rem; /* Larger padding from second definition */
+  background: var(--page-section-bg); /* Using gradient from second definition */
+  border-radius: 20px; /* Rounded from second definition */
+  box-shadow:
+    0 10px 20px var(--shadow-strong),
+    inset 0 0 15px rgba(88, 166, 255, 0.1); /* More complex shadow */
+  transition: box-shadow 0.3s ease;
+}
+
+.page-section:hover {
+  box-shadow:
+    0 15px 25px var(--shadow-stronger),
+    inset 0 0 25px var(--page-section-hover-inset);
+}
+
+.page-section h1,
+.page-section h2 { /* Combined h1 and h2 styling */
+  color: var(--link-blue);
+  border-bottom: 3px solid #39445a; /* Could be a variable */
+  padding-bottom: 0.6rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 3px rgba(88, 166, 255, 0.4); /* Color could be variable */
+  font-size: 2rem; /* Assuming h1 size, h2 might be smaller, e.g., 1.75rem */
+}
+/* If h2 needs a different font size: */
+/* .page-section h2 { font-size: 1.75rem; margin-bottom: 1.2rem; } */
+
+
+.page-section p {
+  color: #d0d7de; /* Slightly different from primary-text, could be a variable */
+  margin-bottom: 1.2rem;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+/* Service Table (from first .page-section block) */
+.service-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem; /* Spacing within its section */
+  color: var(--primary-text); /* Ensure text color contrasts with potential section bg */
+}
+
+.service-table th,
+.service-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #ccc; /* Light border for dark theme, consider a variable */
+}
+
+.service-table th {
+  background-color: var(--chatbot-primary-bg); /* Re-using a dark bg for header */
+  color: var(--white-bg);
+  font-weight: bold; /* Ensure header stands out */
+}
+
+/* Contact List (from first .page-section block) */
+.contact-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.contact-list li {
+  padding: 0.5rem 0;
+  font-size: 1rem; /* Ensure consistent font size */
+  color: var(--primary-text);
+}
+
+/* Services Cards (from second .page-section block) */
+.service-card {
+  background: var(--service-card-bg);
+  border-left: 6px solid var(--link-blue);
+  padding: 1.5rem 2rem;
+  margin-bottom: 1.2rem;
+  border-radius: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px rgba(88, 166, 255, 0.3); /* Color could be variable */
+}
+
+.service-card h3 { /* Assuming service cards might have headings */
+    color: var(--link-blue);
+    margin-bottom: 0.75rem;
+}
+
+.price { /* Styling for price text, likely within a .service-card or similar */
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--link-blue);
+  text-shadow: 0 1px 4px rgba(88, 166, 255, 0.5); /* Color could be variable */
+}
+
+/* Contact Form (from second .page-section block, distinct from .auth-form) */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 1.5rem; /* Space from section title or other content */
+}
+
+.contact-form label { /* Added basic label styling for consistency */
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+    color: var(--primary-text);
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"], /* Added common types */
+.contact-form input[type="tel"],
+.contact-form textarea {
+  padding: 1rem 1.2rem;
+  border: 1.5px solid #39445a; /* Could be a variable */
+  border-radius: 12px;
+  background-color: var(--contact-form-input-bg);
+  color: var(--white-bg);
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: inset 0 0 8px #121921; /* Could be a variable */
+}
+
+.contact-form input[type="text"]:focus,
+.contact-form input[type="email"]:focus,
+.contact-form input[type="tel"]:focus,
+.contact-form textarea:focus {
+  border-color: var(--link-blue);
+  outline: none;
+  box-shadow: 0 0 8px var(--link-blue); /* Outer glow on focus */
+}
+
+.contact-form textarea {
+    min-height: 120px; /* Provide a decent default size for textarea */
+    resize: vertical; /* Allow vertical resize */
+}
+
+.contact-form button {
+  padding: 0.85rem 2rem;
+  background-color: var(--button-green-bg);
+  color: var(--white-bg);
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(35, 134, 54, 0.5); /* Color could be variable */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form button:hover {
+  background-color: var(--button-green-hover-bg);
+  box-shadow: 0 6px 14px rgba(46, 160, 67, 0.7); /* Color could be variable */
+}
+
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--secondary-bg); /* Match navbar */
+    position: absolute;
+    top: var(--navbar-height); /* Position below navbar */
+    left: 0;
+    max-height: 0; /* Collapsed by default */
+    overflow: hidden; /* Hide content when collapsed */
+    /* transition: max-height 0.3s ease; /* Already defined in .nav-links */
+  }
+
+  .nav-links.active {
+    max-height: 300px; /* Expanded height - adjust as needed */
+    padding-bottom: 1rem; /* Add some padding when open */
+  }
+
+  .nav-links li {
+    text-align: center; /* Center links in mobile view */
+    padding: 0.5rem 0;
+  }
+
+  .nav-toggle {
+    display: block; /* Show toggle button */
+  }
+
+  main.container {
+    padding-top: calc(var(--navbar-height) + 10px);
+    padding-bottom: calc(var(--footer-height) + 10px);
+  }
+
+  .content-wrapper {
+    flex-direction: column;
+    align-items: center; /* Center items vertically */
+    gap: 1.5rem; /* Reduce gap on smaller screens */
+    height: auto; /* Let content define height */
+  }
+
+  .image-grid, .charts-container {
+    max-width: 100%; /* Full width on smaller screens */
+    flex: 1 1 100%; /* Ensure they take full width if stacked */
+    height: auto; /* Let content define height */
+  }
+
+  #internetChart, #lineChart {
+    height: 300px; /* Fixed height for charts on mobile for visibility */
+    min-height: 300px; /* Ensure it doesn't get smaller */
+  }
+
+  .page-section {
+    padding: 2rem 1.5rem; /* Adjusted padding for smaller screens */
+    margin: 3rem 1rem; /* Adjusted margin */
+    border-radius: 16px;
+  }
+
+  .page-section h1, .page-section h2 {
+    font-size: 1.75rem; /* Slightly smaller headings */
+  }
+  .page-section p {
+    font-size: 1rem;
+  }
+
+  .service-card {
+    padding: 1.2rem 1.5rem;
+    border-radius: 12px;
+  }
+
+  .contact-form input[type="text"],
+  .contact-form input[type="email"],
+  .contact-form input[type="tel"],
+  .contact-form textarea {
+    padding: 0.9rem 1rem;
+    border-radius: 10px;
+  }
+
+  .contact-form button {
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+  }
+
+  #chat-popup {
+    width: calc(100% - 40px); /* More responsive width */
+    max-width: 300px;
+    bottom: 70px;
+    right: 20px;
+    left: 20px; /* Center it a bit more */
+    margin: 0 auto;
+  }
+  .chatbot-icon, #chatbot-icon {
+    bottom: 15px;
+    right: 15px;
+  }
+}
+
+/* Further responsive adjustments for smaller mobile if needed */
+@media (max-width: 480px) {
+  .navbar .logo {
+    font-size: 1.3rem;
+  }
+  .nav-toggle {
+    font-size: 1.6rem;
+  }
+  .page-section {
+    padding: 1.5rem 1rem;
+    margin: 2rem 0.5rem;
+  }
+  .auth-form {
+    padding: 15px;
+  }
+  .charts-container, .image-grid {
+    padding: 0.75rem;
+  }
+  #internetChart, #lineChart {
+    height: 250px; /* Further reduce chart height */
+    min-height: 250px;
+  }
+  .chat-footer input {
+    padding: 6px 8px;
+    font-size: 13px;
+  }
+  .chat-footer button {
+    padding: 6px 10px;
+  }
+}
+
+
+
+
+
+/* ---------- PRICING PAGE ---------- */
+.pricing-container {
+  padding-top: 100px;
+  padding-bottom: 80px;
+  background-color: #0a0f28;
+  color: #e0e6f8;
+}
+
+.intro-section {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 40px;
+}
+
+.intro-section h1 {
+  font-size: 2.5rem;
+  color: #fca311;
+}
+
+.intro-section p {
+  font-size: 1.1rem;
+  color: #ccc;
+  margin-top: 10px;
+}
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+.plan-card {
+  background-color: #1e2749;
+  border-radius: 10px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  transition: transform 0.3s;
+}
+
+.plan-card:hover {
+  transform: translateY(-5px);
+}
+
+.plan-card.highlighted {
+  border: 2px solid #fca311;
+  background-color: #253157;
+}
+
+.plan-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.plan-card .price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #fca311;
+}
+
+.plan-card ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.plan-card button {
+  padding: 10px 20px;
+  background-color: #fca311;
+  color: #0a0f28;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.plan-card button:hover {
+  background-color: #e59400;
+}
+
+/* Features Section */
+.feature-section {
+  margin: 60px auto 40px;
+  max-width: 1100px;
+  padding: 0 20px;
+}
+
+.feature-section h3 {
+  text-align: center;
+  color: #fca311;
+  margin-bottom: 30px;
+  font-size: 2rem;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.feature {
+  background-color: #1c2340;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.feature h4 {
+  margin-bottom: 10px;
+  color: #fca311;
+}
+
+.feature p {
+  font-size: 0.95rem;
+  color: #ddd;
+}
+
+/* FAQ Section */
+.faq-section {
+  max-width: 800px;
+  margin: 60px auto 0;
+  padding: 0 20px;
+}
+
+.faq-section h3 {
+  text-align: center;
+  color: #fca311;
+  margin-bottom: 25px;
+  font-size: 2rem;
+}
+
+.faq-section details {
+  background-color: #1e2749;
+  border-radius: 8px;
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.faq-section summary {
+  font-weight: bold;
+  color: #e0e6f8;
+  outline: none;
+}
+
+.faq-section p {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+
+
+
+
+
+
+
+
+
+/* ---------- CONTACT PAGE ---------- */
+
+.contact-container {
+  padding: 2rem;
+  color: #ffffff;
+  background: #0f172a;
+  border-radius: 1rem;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #94a3b8;
+}
+
+.contact-main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.contact-form, .contact-info {
+  flex: 1 1 45%;
+  background: #1e293b;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px #0ea5e9;
+}
+
+.contact-form h2,
+.contact-info h2 {
+  margin-bottom: 1rem;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: #334155;
+  color: white;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #cbd5e1;
+}
+
+.btn-submit {
+  padding: 0.75rem 1.5rem;
+  background: #0ea5e9;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-submit:hover {
+  background: #0284c7;
+}
+
+.faq-list {
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  margin-top: 1rem;
+}
+
+
+/* services page */
+
+
+
+
+
+
+
+
+.services-container {
+  padding: 2rem;
+  background-color: #0f172a;
+  color: #ffffff;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.service-card {
+  background-color: #1e293b;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 15px rgba(14, 165, 233, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+}
+
+.btn-service {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background: #0ea5e9;
+  color: #fff;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.btn-service:hover {
+  background: #0284c7;
+}
+
+.training-section, .consult-section {
+  margin-top: 4rem;
+  background: #1e293b;
+  padding: 2rem;
+  border-radius: 1rem;
+}
+
+.training-section ul {
+  list-style: disc;
+  padding-left: 2rem;
+  margin-top: 1rem;
+}
+
+.popup-form {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0; top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(15, 23, 42, 0.9);
+}
+
+.popup-content {
+  background-color: #1e293b;
+  color: #fff;
+  margin: 5% auto;
+  padding: 2rem;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 1rem;
+  position: relative;
+}
+
+.popup-content input, .popup-content textarea {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #334155;
+  color: white;
+}
+
+.close {
+  position: absolute;
+  top: 10px; right: 20px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #94a3b8;
+}

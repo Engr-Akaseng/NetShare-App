@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}About Us - NetShare{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_pages.css') }}">
+{% endblock %}
+{% block content %}
+<section class="page-section">
+    <h1>About NetShare</h1>
+    <p>
+        NetShare is committed to making internet connectivity accessible to everyone, even in remote areas.
+        Our platform allows users to request, pay for, and access encrypted internet configurations shared by hosts globally.
+    </p>
+    <p>
+        We believe in decentralizing internet access by enabling secure and timed sharing, ensuring everyone can stay connected,
+        regardless of location or resources.
+    </p>
+</section>
+{% endblock %}

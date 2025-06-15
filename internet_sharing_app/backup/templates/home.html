@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Home - NetShare{% endblock %}
+
+{% block content %}
+<div class="home-container">
+
+  <div class="content-wrapper">
+
+    <!-- Left side: Grid of images -->
+    <section class="image-grid">
+      <img src="{{ url_for('static', filename='images/people1.jpg') }}" alt="Person using internet">
+      <img src="{{ url_for('static', filename='images/people2.jpg') }}" alt="Person using internet">
+      <img src="{{ url_for('static', filename='images/people8.jpg') }}" alt="Person using internet">
+      <img src="{{ url_for('static', filename='images/people7.jpg') }}" alt="Person using internet">
+      <img src="{{ url_for('static', filename='images/people3.jpg') }}" alt="Person using internet">
+      <img src="{{ url_for('static', filename='images/people4.jpg') }}" alt="Person using internet">
+      <!-- add more images as needed -->
+    </section>
+
+    <!-- Right side: Charts -->
+    <section class="charts-container">
+      <div class="chart-wrapper">
+        <h3>Internet Usage</h3>
+        <canvas id="internetDoughnutChart" width="300" height="300"></canvas>
+      </div>
+      <div class="chart-wrapper">
+        <h3>Connection Over Time</h3>
+        <canvas id="internetLineChart" width="300" height="300"></canvas>
+      </div>
+    </section>
+
+  </div>
+
+
+<!-- Chart.js library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Doughnut chart for internet usage
+  const ctxDoughnut = document.getElementById('internetDoughnutChart').getContext('2d');
+  const internetDoughnutChart = new Chart(ctxDoughnut, {
+      type: 'doughnut',
+      data: {
+          labels: ['Used', 'Remaining'],
+          datasets: [{
+              label: 'Internet Usage',
+              data: [65, 35],  // Example data
+              backgroundColor: ['#007bff', '#cce5ff'],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          responsive: true,
+          plugins: {
+              legend: {
+                  position: 'bottom'
+              }
+          }
+      }
+  });
+
+  // Line chart for internet connection vs time elapsed
+  const ctxLine = document.getElementById('internetLineChart').getContext('2d');
+  const internetLineChart = new Chart(ctxLine, {
+      type: 'line',
+      data: {
+          labels: ['0 min', '5 min', '10 min', '15 min', '20 min', '25 min', '30 min'],  // Time elapsed
+          datasets: [{
+              label: 'Connection Strength (%)',
+              data: [100, 90, 80, 70, 60, 40, 20],  // Example decreasing data
+              fill: false,
+              borderColor: '#007bff',
+              tension: 0.3,
+              pointBackgroundColor: '#007bff',
+              pointRadius: 4,
+          }]
+      },
+      options: {
+          responsive: true,
+          scales: {
+              y: {
+                  min: 0,
+                  max: 100,
+                  ticks: {
+                    stepSize: 20,
+                    callback: function(value) { return value + '%'; }
+                  },
+                  title: {
+                    display: true,
+                    text: 'Connection Strength'
+                  }
+              },
+              x: {
+                  title: {
+                    display: true,
+                    text: 'Time Elapsed'
+                  }
+              }
+          },
+          plugins: {
+              legend: {
+                  display: false
+              }
+          }
+      }
+  });
+</script>
+{% endblock %}

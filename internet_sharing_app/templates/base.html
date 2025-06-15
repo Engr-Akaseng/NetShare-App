@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Internet Sharing App{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="container">
+        <a href="{{ url_for('home') }}" class="logo">NetShare</a>
+
+        <!-- Hamburger icon -->
+        <button
+          class="nav-toggle"
+          id="nav-toggle"
+          aria-label="Toggle navigation"
+        >
+          &#9776;
+        </button>
+
+        <ul class="nav-links" id="nav-links">
+          {% if current_user.is_authenticated %}
+          <li><a href="{{ url_for('home') }}">Home</a></li>
+          <li><a href="{{ url_for('about') }}">About</a></li>
+          <li><a href="{{ url_for('services') }}">Services</a></li>
+          <li><a href="{{ url_for('pricing') }}">Pricing</a></li>
+          <li><a href="{{ url_for('contact') }}">Contact</a></li>
+          <li<li><a href="{{ url_for('logout') }}">Logout ({{ current_user.username }})</a></li>
+          </li>
+          {% else %}
+          <li><a href="{{ url_for('login') }}">Login</a></li>
+          <li><a href="{{ url_for('register') }}">Register</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %} {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container footer-links">
+        <a href="{{ url_for('register') }}">Create Account</a>
+        <a href="{{ url_for('login') }}">Sign In</a>
+        <a href="{{ url_for('privacy') }}">Privacy Policy</a>
+        <a href="{{ url_for('terms') }}">Terms & Conditions</a>
+        <span>© 2025 NetShare Inc.</span>
+      </div>
+    </footer>
+
+    <!-- Hamburger Nav Toggle -->
+    <script>
+      document.getElementById("nav-toggle").addEventListener("click", () => {
+        document.getElementById("nav-links").classList.toggle("active");
+      });
+    </script>
+
+    <!-- Chatbot Button -->
+    <div id="chatbot-icon" onclick="toggleChat()">💬</div>
+
+    <!-- Chatbot Popup -->
+    <div id="chat-popup" style="display: none">
+      <div class="chat-header">
+        <span>Chat with us</span>
+        <button onclick="toggleChat()">×</button>
+      </div>
+      <div class="chat-body" id="chat-body">
+        <p class="bot">Hello! How can I help you today?</p>
+      </div>
+      <div class="chat-footer">
+        <input
+          type="text"
+          id="chat-input"
+          placeholder="Type your message..."
+          onkeypress="handleKey(event)"
+        />
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+
+    <!-- Chatbot JavaScript -->
+    <script>
+      function toggleChat() {
+        const chatPopup = document.getElementById("chat-popup");
+        chatPopup.style.display =
+          chatPopup.style.display === "flex" ? "none" : "flex";
+      }
+
+      function sendMessage() {
+        const input = document.getElementById("chat-input");
+        const message = input.value.trim();
+        if (message !== "") {
+          const chatBody = document.getElementById("chat-body");
+
+          // Display user message
+          const userMsg = document.createElement("p");
+          userMsg.className = "user";
+          userMsg.innerText = message;
+          chatBody.appendChild(userMsg);
+
+          // Send to server
+          fetch("/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              const botMsg = document.createElement("p");
+              botMsg.className = "bot";
+              botMsg.innerText = data.reply;
+              chatBody.appendChild(botMsg);
+              chatBody.scrollTop = chatBody.scrollHeight;
+            })
+            .catch(() => {
+              const errorMsg = document.createElement("p");
+              errorMsg.className = "bot";
+              errorMsg.innerText = "Oops! Something went wrong.";
+              chatBody.appendChild(errorMsg);
+            });
+
+          input.value = "";
+        }
+      }
+
+      function handleKey(e) {
+        if (e.key === "Enter") sendMessage();
+      }
+    </script>
+  </body>
+</html>

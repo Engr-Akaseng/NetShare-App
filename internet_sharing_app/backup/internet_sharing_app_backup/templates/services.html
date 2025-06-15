@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Our Services{% endblock %}
+
+{% block content %}
+<div class="services-container">
+  <h1>Our Premium Services</h1>
+  <p class="subtitle">We don’t just share internet. We build connectivity solutions.</p>
+
+  <div class="services-grid">
+    <!-- Service 1 -->
+    <div class="service-card">
+      <h3>📡 Secure Internet Sharing</h3>
+      <p>Access global internet securely through encrypted files configured to your needs. Supports mobile and desktop.</p>
+      <a href="{{ url_for('pricing') }}" class="btn-service">View Plans</a>
+    </div>
+
+    <!-- Service 2 -->
+    <div class="service-card">
+      <h3>⚡ High-Speed Custom Bundles</h3>
+      <p>Need more speed or longer session time? Book a tailored internet access bundle with enhanced QoS.</p>
+      <button onclick="openPopup()" class="btn-service">Request Custom Plan</button>
+    </div>
+
+    <!-- Service 3 -->
+    <div class="service-card">
+      <h3>🎓 Internet Training Programs</h3>
+      <p>Learn how to get fast internet even in remote areas. Courses include VPN setup, device optimization & more.</p>
+      <a href="#training" class="btn-service">Explore Trainings</a>
+    </div>
+
+    <!-- Service 4 -->
+    <div class="service-card">
+      <h3>🤝 1-on-1 Expert Consultation</h3>
+      <p>Get guidance from our engineers on advanced networking, bandwidth sharing, and latency optimization.</p>
+      <a href="#consult" class="btn-service">Book a Session</a>
+    </div>
+  </div>
+
+  <!-- Section: Training -->
+  <div class="training-section" id="training">
+    <h2>Our Training Programs</h2>
+    <ul>
+      <li>🌍 How to Get Internet in Remote Areas</li>
+      <li>🔐 Setting Up Secure VPN Tunnels</li>
+      <li>📲 Optimizing Mobile Devices for Speed</li>
+      <li>📡 Sharing Internet Using Custom Hardware</li>
+    </ul>
+    <a href="#contact" class="btn-service">Enroll in a Program</a>
+  </div>
+
+  <!-- Section: Consultation -->
+  <div class="consult-section" id="consult">
+    <h2>Book a 1-on-1 Session</h2>
+    <p>Need a private session with one of our engineers? We offer in-depth technical consultations.</p>
+    <a href="{{ url_for('contact') }}" class="btn-service">Schedule Now</a>
+  </div>
+</div>
+
+<!-- Popup Modal -->
+<div id="popupForm" class="popup-form">
+  <div class="popup-content">
+    <span class="close" onclick="closePopup()">&times;</span>
+    <h3>Request a Custom Internet Plan</h3>
+    <form action="{{ url_for('custom_plan') }}" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <input type="text" name="speed" placeholder="Preferred Speed (e.g., 10 Mbps)" required>
+      <input type="text" name="duration" placeholder="Duration (e.g., 5 hours)" required>
+      <textarea name="notes" rows="4" placeholder="Additional Requirements..."></textarea>
+      <button type="submit" class="btn-service">Submit Request</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function openPopup() {
+    document.getElementById('popupForm').style.display = 'block';
+  }
+
+  function closePopup() {
+    document.getElementById('popupForm').style.display = 'none';
+  }
+</script>
+{% endblock %}

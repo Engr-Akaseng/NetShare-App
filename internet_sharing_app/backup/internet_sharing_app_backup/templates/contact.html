@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<div class="contact-container">
+  <h1>Contact Us</h1>
+  <p class="subtitle">We're here to help. Whether it's support, questions, or feedback — just send us a message!</p>
+
+  <div class="contact-main">
+    <!-- Contact Form -->
+    <div class="contact-form">
+      <h2>Send Us a Message</h2>
+      <form action="{{ url_for('send_message') }}" method="POST">
+        <label for="name">Your Name</label>
+        <input type="text" name="name" required placeholder="Enter your full name">
+
+        <label for="email">Your Email</label>
+        <input type="email" name="email" required placeholder="Enter your email address">
+
+        <label for="subject">Subject</label>
+        <input type="text" name="subject" required placeholder="Enter subject">
+
+        <label for="message">Message</label>
+        <textarea name="message" rows="5" required placeholder="Type your message here..."></textarea>
+
+        <button type="submit" class="btn-submit">Send Message</button>
+      </form>
+    </div>
+
+    <!-- Contact Details -->
+    <div class="contact-info">
+      <h2>Reach Us Directly</h2>
+      <p><strong>Email:</strong> support@internetshareapp.com</p>
+      <p><strong>Phone:</strong> +237 653 945 863</p>
+      <p><strong>Location:</strong> Douala, Cameroon</p>
+
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="{{ url_for('pricing') }}">View Plans</a></li>
+        <li><a href="{{ url_for('chat') }}">Live Chat</a></li>
+        <li><a href="{{ url_for('about') }}">About Us</a></li>
+      </ul>
+
+      <h3>FAQs</h3>
+      <ul class="faq-list">
+        <li><strong>Q:</strong> How do I receive the internet file?<br><strong>A:</strong> It is automatically generated after payment.</li>
+        <li><strong>Q:</strong> Can I use it on any device?<br><strong>A:</strong> Yes, it supports Windows, Android, and Linux.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

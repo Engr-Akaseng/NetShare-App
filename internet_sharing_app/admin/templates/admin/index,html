@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Admin Dashboard</h1>
+<p>Welcome, {{ current_user.username }}!</p>
+<ul>
+  <li><a href="{{ url_for('admin.manage_users') }}">Manage Users</a></li>
+  <!-- Add more admin links here -->
+</ul>
+{% endblock %}
